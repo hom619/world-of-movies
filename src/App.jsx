@@ -1,4 +1,5 @@
 import "./App.css";
+import Display from "./components/Display";
 import { Hero } from "./components/Hero";
 function App() {
   return (
@@ -6,6 +7,7 @@ function App() {
       {/* Hero section */}
       <Hero />
       {/* Display section */}
+      <Display />
     </div>
   );
 }

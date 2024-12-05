@@ -1,7 +1,16 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
-
+import { React, useEffect } from "react";
+import { MovieCards } from "./MovieCards";
+import { fetchMovieFromApi } from "../Utils/axios";
+import { randomChar } from "../Utils/random";
 export const Hero = () => {
+  useEffect(() => {
+    fetchMovie(randomChar());
+  }, []);
+  const fetchMovie = async (str) => {
+    const movie = await fetchMovieFromApi(str);
+    console.log(movie);
+  };
   const movieCSS = {
     backgroundImage: `url("https://www.omdbapi.com/src/poster.jpg")`,
     backgroundRepeat: "no-repeat",
@@ -38,6 +47,9 @@ export const Hero = () => {
                 Button
               </button>
             </div>
+          </div>
+          <div className="movie-card-display">
+            <MovieCards />
           </div>
         </div>
       </div>

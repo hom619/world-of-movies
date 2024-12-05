@@ -12,3 +12,19 @@ nav {
 .hero-content {
   max-width: 450px;
 }
+/* card */
+.movie-card-display {
+  background: rgba(255, 255, 255, 0.313);
+  backdrop-filter: blur(5px);
+  max-width: 450px;
+}
+.movie-card-display img {
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 768px) {
+  .movie-card-item img {
+    max-height: 220px;
+    object-fit: cover;
+  }
+}
