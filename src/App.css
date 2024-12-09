@@ -9,9 +9,37 @@ nav {
   position: relative;
   min-height: 80vh;
 }
-.hero-content {
-  max-width: 450px;
+.hero::after {
+  content: "";
+  position: absolute;
+  background: rgba(0, 0, 0, 0.571);
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
+.hero-content {
+  max-height: 250px;
+  max-width: 450px;
+  z-index: 2;
+}
+
+/* form */
+.form-center {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s;
+}
+.form-top {
+  position: absolute;
+  top: 25%;
+  width: 450px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s;
+}
+
 /* card */
 .movie-card-display {
   background: rgba(255, 255, 255, 0.313);
@@ -26,5 +54,17 @@ nav {
   .movie-card-item img {
     max-height: 220px;
     object-fit: cover;
+  }
+}
+.displayMovie {
+  transform: scale(1);
+  animation: zoom 0.5s;
+}
+@keyframes zoom {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
   }
 }

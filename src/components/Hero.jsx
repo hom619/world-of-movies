@@ -1,18 +1,42 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { React, useEffect } from "react";
+import { React, useEffect, useState, useRef } from "react";
 import { MovieCards } from "./MovieCards";
 import { fetchMovieFromApi } from "../Utils/axios";
 import { randomChar } from "../Utils/random";
-export const Hero = () => {
+export const Hero = ({ addMoviesToList }) => {
+  const [movieSearched, setMovieSearched] = useState({});
+  const [bgImage, setbgImage] = useState("");
+  const loadingState = useRef(true); //this prevents multiple api calls due to rendering by useEffect
+  const searchRef = useRef("");
+  const [searchState, setSearchState] = useState(false);
   useEffect(() => {
-    fetchMovie(randomChar());
+    if (loadingState.current) {
+      fetchMovie(randomChar());
+      loadingState.current = false;
+    }
   }, []);
   const fetchMovie = async (str) => {
     const movie = await fetchMovieFromApi(str);
-    console.log(movie);
+    setMovieSearched(movie);
+    setbgImage(movie.Poster);
+    setSearchState(false);
+  };
+  const handleOnDelete = () => {
+    setMovieSearched({});
+    setSearchState(true);
+  };
+  const handleOnButtonSearch = () => {
+    fetchMovie(searchRef.current.value);
+    searchRef.current.value = "";
+  };
+  const handleOnAddedMoviesList = (genre) => {
+    addMoviesToList({ ...movieSearched, genre });
+    setMovieSearched({});
+    setSearchState(true);
   };
   const movieCSS = {
-    backgroundImage: `url("https://www.omdbapi.com/src/poster.jpg")`,
+    backgroundImage: `url(${bgImage})`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     backgroundSize: "cover",
@@ -28,29 +52,43 @@ export const Hero = () => {
         style={movieCSS}
       >
         <div className="hero-content">
-          <div className="form-center">
-            <div className="text-center">
-              <h1>This is the world of Movies</h1>
-              <p>Find the details before watching them</p>
+          <div className={searchState ? "form-center" : "form-top"}>
+            {searchState && (
+              <div className="text-center">
+                <h1>This is the world of Movies</h1>
+                <p>Find the details before watching them</p>
+              </div>
+            )}
+            <div className="input-group my-5">
+              <input
+                ref={searchRef}
+                onFocus={() => setSearchState(true)}
+                type="text"
+                className="form-control"
+                placeholder="Search Movie Name"
+                aria-label="Search Movie Name"
+                aria-describedby="basic-addon2"
+              />
+              <div className="input-group-append">
+                <button
+                  onClick={handleOnButtonSearch}
+                  className="btn btn-danger"
+                  type="button"
+                >
+                  Search
+                </button>
+              </div>
             </div>
           </div>
-          <div className="input-group my-5">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search Movie Name"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-            />
-            <div className="input-group-append">
-              <button className="btn btn-danger" type="button">
-                Button
-              </button>
+          {!searchState && (
+            <div className="movie-card-display displayMovie mt-5">
+              <MovieCards
+                movieSearched={movieSearched}
+                deleteMovie={handleOnDelete}
+                handleOnAddedMoviesList={handleOnAddedMoviesList}
+              />
             </div>
-          </div>
-          <div className="movie-card-display">
-            <MovieCards />
-          </div>
+          )}
         </div>
       </div>
     </div>

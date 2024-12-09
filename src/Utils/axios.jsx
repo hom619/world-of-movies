@@ -5,7 +5,7 @@ export const fetchMovieFromApi = async (str) => {
   try {
     const url = apiEndPoint + "t=" + str;
     const response = await axios.get(url);
-    console.log(response);
+    return response.data;
   } catch (error) {
     console.log(error);
   }
