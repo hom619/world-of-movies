@@ -1,6 +1,6 @@
 import axios from "axios";
 const apiKey = import.meta.env.VITE_APIKEY;
-const apiEndPoint = `http://www.omdbapi.com/?apikey=${apiKey}&`;
+const apiEndPoint = `https://www.omdbapi.com/?apikey=${apiKey}&`;
 export const fetchMovieFromApi = async (str) => {
   try {
     const url = apiEndPoint + "t=" + str;
