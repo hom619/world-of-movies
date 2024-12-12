@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { MovieCards } from "./MovieCards";
 
-export default function Display({ movieList }) {
+export default function Display({ movieList, handleOnMoviesDelete }) {
   const [displayMoviesList, setDisplayMoviesList] = useState([]);
   useEffect(() => {
     setDisplayMoviesList(movieList);
@@ -15,8 +15,8 @@ export default function Display({ movieList }) {
     setDisplayMoviesList(movieList.filter((movie) => movie.genre === genre));
   };
   return (
-    <div className="container mt-5 rounded">
-      <div className="bg-dark p-3">
+    <div className="container mt-5">
+      <div className="bg-dark p-3 rounded">
         <div className="row">
           <div className="col">
             <div className="btn-group" role="group" aria-label="Basic example">
@@ -52,7 +52,10 @@ export default function Display({ movieList }) {
             <div className="d-flex justify-content-around gap-2 flex-wrap">
               {displayMoviesList.map((item, i) => (
                 <div className="" key={i}>
-                  <MovieCards movieSearched={item} />
+                  <MovieCards
+                    movieSearched={item}
+                    deleteMovie={handleOnMoviesDelete}
+                  />
                 </div>
               ))}
             </div>

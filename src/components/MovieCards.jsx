@@ -7,7 +7,7 @@ export const MovieCards = ({
   deleteMovie,
   handleOnAddedMoviesList,
 }) => {
-  const { Poster, Title, imdbRating, Plot, genre } = movieSearched;
+  const { Poster, Title, imdbRating, Plot, genre, imdbID } = movieSearched;
   const image = "https://www.omdbapi.com/src/poster.jpg";
   return (
     <div className="container">
@@ -22,13 +22,13 @@ export const MovieCards = ({
           {!genre && (
             <div className="d-flex justify-content-between gap-2">
               <button
-                className="btn btn-warning"
+                className="btn btn-warning flex-grow-1 gap-2"
                 onClick={() => handleOnAddedMoviesList("drama")}
               >
                 Drama
               </button>
               <button
-                className="btn btn-info"
+                className="btn btn-info flex-grow-1 gap-2"
                 onClick={() => handleOnAddedMoviesList("action")}
               >
                 {" "}
@@ -38,7 +38,10 @@ export const MovieCards = ({
           )}
 
           <div className="d-grid mt-3">
-            <button onClick={deleteMovie} className="btn btn-danger">
+            <button
+              onClick={() => deleteMovie(imdbID)}
+              className="btn btn-danger"
+            >
               Delete
             </button>
           </div>
