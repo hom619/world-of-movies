@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Display from "./components/Display";
 import { Hero } from "./components/Hero";
-import { accessFromLocalStorage, storeInLocalStorage } from "./Utils/localDb";
+import {
+  accessFromLocalStorage,
+  storeInLocalStorage,
+  deleteItemFromLocalStorage,
+} from "./Utils/localDb";
 function App() {
   const [movieList, setMovieList] = useState([]);
   useEffect(() => {
@@ -19,6 +23,7 @@ function App() {
   const handleOnMoviesDelete = (imdbID) => {
     confirm("Are you sure you want to delete the movie?") &&
       setMovieList(movieList.filter((movie) => movie.imdbID !== imdbID));
+    deleteItemFromLocalStorage(imdbID);
   };
   return (
     <div className="wrapper">
