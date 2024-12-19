@@ -23,7 +23,7 @@ function App() {
   const handleOnMoviesDelete = (imdbID) => {
     confirm("Are you sure you want to delete the movie?") &&
       setMovieList(movieList.filter((movie) => movie.imdbID !== imdbID));
-    deleteItemFromLocalStorage(imdbID);
+    storeInLocalStorage(movieList.filter((movie) => movie.imdbID !== imdbID));
   };
   return (
     <div className="wrapper">
